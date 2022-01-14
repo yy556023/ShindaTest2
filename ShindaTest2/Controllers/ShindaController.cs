@@ -37,26 +37,58 @@ namespace ShindaTest2.Controllers
 
         public async Task<ActionResult> Get()
         {
-            var showls = from o in _context.TblOrder
-                         select new Sign()
-                         {
-                             cID = o.COrderId,
-                             cName = o.CName,
-                             showDt = o.CDt.Value.ToString("yyyy/MM/dd HH:mm:ss"),
-                             showTot = o.CSubTotal.Value.ToString("C"),
-                             items = o.COrderId
-                         };
+            var showls = (from o in _context.TblOrder
+                          select new Sign()
+                          {
+                              cID = o.COrderId,
+                              cName = o.CName,
+                              showDt = o.CDt.Value.ToString("yyyy/MM/dd HH:mm:ss"),
+                              showTot = o.CSubTotal.Value.ToString("C"),
+                              items = o.COrderId,
+                              showitems = ""
+                          }).ToList();
+
+            foreach (var item in showls)
+            {
+                var items = (from d in _context.TblOrderDetails
+                             join p in _context.TblProduct
+                             on d.CProductId equals p.CProdcutId
+                             where d.COrderId == item.cID
+                             group p by new { p.CProdcutId, d.COrderId, p.CProdcutName } into g
+                             select g.Key.CProdcutName).ToList();
+
+                item.showitems = string.Join(',', items);
+            }
 
             var jsres = JsonConvert.SerializeObject(showls);
 
             return Ok(jsres);
         }
 
-        public async Task<ActionResult> GetID()
+        public async Task<ActionResult> Find(string? id)
         {
+            var detail = (from d in _context.TblOrderDetails
+                          join p in _context.TblProduct
+                          on d.CProductId equals p.CProdcutId
+                          group d by new { d.COrderId, p.CProdcutName, d.CCount, d.CTotal } into g
+                          where g.Key.COrderId == id
+                          select new Item()
+                          {
+                              pID = g.Key.COrderId,
+                              pName = g.Key.CProdcutName,
+                              pCount = g.Key.CCount.Value,
+                              pTotal = g.Key.CTotal.Value,
+                          }).ToList();
 
+            var show = new Show()
+            {
+                pID = detail[0].pID,
+                Item = detail
+            };
 
-            return Ok();
+            var jsres = JsonConvert.SerializeObject(show);
+
+            return Ok(jsres);
         }
 
         [HttpPost]
@@ -135,21 +167,34 @@ namespace ShindaTest2.Controllers
                             CTotal = (pricels[i].CPrice * int.Parse(temp[i]))
                         };
 
-                         _context.TblOrderDetails.Add(newOrderD);
+                        _context.TblOrderDetails.Add(newOrderD);
                     }
 
                     _context.SaveChanges();
                 }
 
-                var showls = from o in _context.TblOrder
-                             select new Sign()
-                             {
-                                 cID = o.COrderId,
-                                 cName = o.CName,
-                                 showDt = o.CDt.Value.ToString("yyyy/MM/dd HH:mm:ss"),
-                                 showTot = o.CSubTotal.Value.ToString("C"),
-                                 items = o.COrderId
-                             };
+                var showls = (from o in _context.TblOrder
+                              select new Sign()
+                              {
+                                  cID = o.COrderId,
+                                  cName = o.CName,
+                                  showDt = o.CDt.Value.ToString("yyyy/MM/dd HH:mm:ss"),
+                                  showTot = o.CSubTotal.Value.ToString("C"),
+                                  items = o.COrderId,
+                                  showitems = ""
+                              }).ToList();
+
+                foreach (var item in showls)
+                {
+                    var items = (from d in _context.TblOrderDetails
+                                 join p in _context.TblProduct
+                                 on d.CProductId equals p.CProdcutId
+                                 where d.COrderId == item.cID
+                                 group p by new { p.CProdcutId, d.COrderId, p.CProdcutName } into g
+                                 select g.Key.CProdcutName).ToList();
+
+                    item.showitems = string.Join(',', items);
+                }
 
                 var jsres = JsonConvert.SerializeObject(showls);
 

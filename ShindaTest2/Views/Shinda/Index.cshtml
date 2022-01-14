@@ -35,11 +35,11 @@
                 <input type="text" onkeyup="get2(event.target.value)" class="form-control" placeholder="姓名" />
             </div>
             <div class="col-4">
-                <select class="form-control">
+                <select onchange="test(event.target.value)" class="form-control">
                     <option value="0">請選擇...</option>
                     @foreach (var item in ViewBag.list as List<TblProduct>)
                     {
-                        <option value="@item.CProdcutId">@item.CProdcutName</option>
+                        <option value="@item.CProdcutName">@item.CProdcutName</option>
                     }
                 </select>
             </div>
@@ -69,7 +69,7 @@
     var res = {
 
     };
-    
+
 
 
     window.onload = function(){
@@ -85,47 +85,86 @@
 
                  res = JSON.parse(req.response);
 
-               
+
 
                     for(i = 0;i<res.length;i++){
-                        $('tbody').append(`<tr><td>${res[i].cID}</td><td>${res[i].showDt}</td><td>${res[i].cName}</td><td>${res[i].showTot}</td><td><a href="javascript:void(0)" onclick="ttt()">查看訂單</a></td></tr>`)
+                        $('tbody').append(`<tr><td>${res[i].cID}</td><td>${res[i].showDt}</td><td>${res[i].cName}</td><td>${res[i].showTot}</td>\
+                        <td><a href="javascript:void(0)" onclick="link(\'${res[i].items}\')">查看訂單</a></td></tr>`)
                     }
-                
+
+            }
+        }
+    }
+
+    function test(value){
+
+        var i = 0;
+
+        $('tbody').html('');
+        debugger
+        for(i = 0;i < res.length;i++){
+            if(res[i].showitems.indexOf(value) != -1){
+                 $('tbody').append(`<tr><td>${res[i].cID}</td><td>${res[i].showDt}</td><td>${res[i].cName}</td><td>${res[i].showTot}</td>\
+                 <td><a href="javascript:void(0)" onclick="link(\'${res[i].items}\')">查看訂單</a></td></tr>`)
+            }
+        }
+
+        console.log(value)
+    }
+
+
+    function link(value){
+        
+        var req = new XMLHttpRequest();
+        req.open('GET',`https://localhost:44366/Shinda/Find/${value}`,true);
+        req.setRequestHeader("Content-type", "application/json");
+        req.setRequestHeader("Accept","json")
+
+        req.send();
+
+        req.onreadystatechange = function(){
+            if(req.status == 200 && req.readyState == 4){
+
+                 var showres = JSON.parse(req.response);
+
+                 var msg = '';
+                 var tot = 0;
+                 for(i = 0; i < showres.Item.length; i++){
+                     msg += `${showres.Item[i].pName}：數量 ${showres.Item[i].pCount} 小計＝\$${showres.Item[i].pTotal}\n`;
+                     tot += showres.Item[i].pTotal;
+                 }
+
+                 alert(`訂單編號：${res.pID}\n\n商品細項：\n\n${msg}\n總金額：\$${tot}`);
             }
         }
     }
 
     function get(value){
 
-        var j = 0;
+        var i = 0;
 
         $('tbody').html('');
 
-        for(j = 0;j < res.length;j++){
-            if(res[j].cID.indexOf(value.toUpperCase()) != -1){
-                 $('tbody').append(`<tr><td>${res[j].cID}</td><td>${res[j].showDt}</td><td>${res[j].cName}</td><td>${res[j].showTot}</td><td><a href="javascript:void(0)" onclick="ttt()">查看訂單</a></td></tr>`)
+        for(i = 0;i < res.length;i++){
+            if(res[i].cID.toUpperCase().indexOf(value.toUpperCase()) != -1){
+                 $('tbody').append(`<tr><td>${res[i].cID}</td><td>${res[i].showDt}</td><td>${res[i].cName}</td><td>${res[i].showTot}</td>\
+                 <td><a href="javascript:void(0)" onclick="link(\'${res[i].items}\')">查看訂單</a></td></tr>`)
             }
         }
-
-        //alert(res[0].cID);
-        //alert(value)
     }
 
         function get2(value){
 
-        //console.log(res[j].cName);
-
-        var j = 0;
+        var i = 0;
 
         $('tbody').html('');
 
-        for(j = 0;j < res.length;j++){
-            if(res[j].cName.indexOf(value.toUpperCase()) != -1){
-                 $('tbody').append(`<tr><td>${res[j].cID}</td><td>${res[j].showDt}</td><td>${res[j].cName}</td><td>${res[j].showTot}</td><td><a href="javascript:void(0)" onclick="ttt()">查看訂單</a></td></tr>`)
+        for(i = 0;i < res.length;i++){
+            if(res[i].cName.toUpperCase().indexOf(value.toUpperCase()) != -1){
+                 $('tbody').append(`<tr><td>${res[i].cID}</td><td>${res[i].showDt}</td><td>${res[i].cName}</td><td>${res[i].showTot}</td>\
+                 <td><a href="javascript:void(0)" onclick="link()">查看訂單</a></td></tr>`)
             }
         }
-
-        //alert(value)
     }
 
     document.getElementById('buy').addEventListener('click',function(){
@@ -160,12 +199,7 @@
 
         Sign.items = arr.join(',');
 
-
-
-
         var data = JSON.stringify(Sign);
-
-        //alert(data);
 
         console.log(data);
 
@@ -184,22 +218,21 @@
                 if(res.Msg != undefined){
                     alert(res.Msg);
                 }
-                else{
+                else
+                {
 
+                    alert('訂單已送出');
 
+                    var inps = $(':input[name=qty]');
 
-                alert('訂單已送出');
+                    for (i = 0; i < inps.length; i++){
+                        inps[i].value = '';
+                        inps[i].checked = false;
+                    }
 
-                var inps = $(':input[name=qty]');
+                    document.getElementById('name').value = '';
 
-                for (i = 0; i < inps.length; i++){
-                    inps[i].value = '';
-                    inps[i].checked = false;
-                }
-
-                document.getElementById('name').value = '';
-
-                $('tbody').html('');
+                    $('tbody').html('');
 
                     for(i = 0;i<res.length;i++){
                         $('tbody').append(`<tr><td>${res[i].cID}</td><td>${res[i].showDt}</td><td>${res[i].cName}</td><td>${res[i].showTot}</td><td><a href="javascript:void(0)" onclick="Get()">查看訂單</a></td></tr>`)
@@ -209,7 +242,7 @@
         }
     })
 
-    
+
 
 
 </script>

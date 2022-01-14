@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hjS3l9dxU2t9EWftYdt2G6UT6kyGvg+DmLX/MSn+CXZG1TzZkWQKMh9/FEvXhiQBvSIyUJzO7rgHDkO0D8rrjw==",
+  "dgSpecHash": "m6OcbNj2TLzvNUSviH8OkGWOMnQOryAJbG7JrNHjJ9pxKCFNDF9YaJ3DGi/NpFpdDTY7RHvlwv1rrn5QgaQ3Fw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\YowaneHaku\\source\\repos\\ShindaTest2\\ShindaTest2\\ShindaTest2.csproj",
+  "projectFilePath": "D:\\Documents\\repo\\ShindaTest2\\ShindaTest2\\ShindaTest2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\YowaneHaku\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\YowaneHaku\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
@@ -162,8 +162,7 @@
     "C:\\Users\\YowaneHaku\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\YowaneHaku\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\YowaneHaku\\.nuget\\packages\\system.xml.xmldocument\\4.3.0\\system.xml.xmldocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\YowaneHaku\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512",
-    "C:\\Users\\YowaneHaku\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.22\\microsoft.netcore.app.host.win-x64.3.1.22.nupkg.sha512"
+    "C:\\Users\\YowaneHaku\\.nuget\\packages\\system.xml.xmlserializer\\4.3.0\\system.xml.xmlserializer.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }

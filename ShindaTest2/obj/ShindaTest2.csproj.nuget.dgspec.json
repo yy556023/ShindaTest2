@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\YowaneHaku\\source\\repos\\ShindaTest2\\ShindaTest2\\ShindaTest2.csproj": {}
+    "D:\\Documents\\repo\\ShindaTest2\\ShindaTest2\\ShindaTest2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\YowaneHaku\\source\\repos\\ShindaTest2\\ShindaTest2\\ShindaTest2.csproj": {
+    "D:\\Documents\\repo\\ShindaTest2\\ShindaTest2\\ShindaTest2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\YowaneHaku\\source\\repos\\ShindaTest2\\ShindaTest2\\ShindaTest2.csproj",
+        "projectUniqueName": "D:\\Documents\\repo\\ShindaTest2\\ShindaTest2\\ShindaTest2.csproj",
         "projectName": "ShindaTest2",
-        "projectPath": "C:\\Users\\YowaneHaku\\source\\repos\\ShindaTest2\\ShindaTest2\\ShindaTest2.csproj",
+        "projectPath": "D:\\Documents\\repo\\ShindaTest2\\ShindaTest2\\ShindaTest2.csproj",
         "packagesPath": "C:\\Users\\YowaneHaku\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\YowaneHaku\\source\\repos\\ShindaTest2\\ShindaTest2\\obj\\",
+        "outputPath": "D:\\Documents\\repo\\ShindaTest2\\ShindaTest2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\YowaneHaku\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -69,12 +69,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.22, 3.1.22]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"

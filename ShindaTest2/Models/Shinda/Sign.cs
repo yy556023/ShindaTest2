@@ -11,5 +11,6 @@ namespace ShindaTest2.Models.Shinda
         public decimal cSubTotal { get; set; } // 小數點後兩位
         public string showTot { get; set; }
         public string  items { get; set; }
+        public string showitems { get; set; }
     }
 }
