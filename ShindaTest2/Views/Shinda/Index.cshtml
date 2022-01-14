@@ -29,10 +29,10 @@
     <div class="col-8 pl-5 pr-5" style="height:500px;">
         <div class="row mb-4">
             <div class="col-4">
-                <input type="text" class="form-control" placeholder="訂單號碼" />
+                <input type="text" onkeyup="get(event.target.value)" class="form-control" placeholder="訂單號碼" />
             </div>
             <div class="col-4">
-                <input type="text" class="form-control" placeholder="姓名" />
+                <input type="text" onkeyup="get2(event.target.value)" class="form-control" placeholder="姓名" />
             </div>
             <div class="col-4">
                 <select class="form-control">
@@ -66,6 +66,11 @@
 @section Scripts{
 
 <script>
+    var res = {
+
+    };
+    
+
 
     window.onload = function(){
         var req = new XMLHttpRequest();
@@ -78,24 +83,49 @@
         req.onreadystatechange = function(){
             if(req.status == 200 && req.readyState == 4){
 
-                var res = JSON.parse(req.response);
+                 res = JSON.parse(req.response);
 
                
 
                     for(i = 0;i<res.length;i++){
-                        $('tbody').append(`<tr><td>${res[i].cID}</td><td>${res[i].showDt}</td><td>${res[i].cName}</td><td>${res[i].showTot}</td><td><a href="javascript:void(0)" onclick="ttt(${res[i].items})">查看訂單</a></td></tr>`)
+                        $('tbody').append(`<tr><td>${res[i].cID}</td><td>${res[i].showDt}</td><td>${res[i].cName}</td><td>${res[i].showTot}</td><td><a href="javascript:void(0)" onclick="ttt()">查看訂單</a></td></tr>`)
                     }
                 
             }
         }
     }
 
+    function get(value){
 
-    function ttt(value){
-        // 使用get呼叫controller船指定資料過來alert
+        var j = 0;
 
+        $('tbody').html('');
 
-        alert(value);
+        for(j = 0;j < res.length;j++){
+            if(res[j].cID.indexOf(value.toUpperCase()) != -1){
+                 $('tbody').append(`<tr><td>${res[j].cID}</td><td>${res[j].showDt}</td><td>${res[j].cName}</td><td>${res[j].showTot}</td><td><a href="javascript:void(0)" onclick="ttt()">查看訂單</a></td></tr>`)
+            }
+        }
+
+        //alert(res[0].cID);
+        //alert(value)
+    }
+
+        function get2(value){
+
+        //console.log(res[j].cName);
+
+        var j = 0;
+
+        $('tbody').html('');
+
+        for(j = 0;j < res.length;j++){
+            if(res[j].cName.indexOf(value.toUpperCase()) != -1){
+                 $('tbody').append(`<tr><td>${res[j].cID}</td><td>${res[j].showDt}</td><td>${res[j].cName}</td><td>${res[j].showTot}</td><td><a href="javascript:void(0)" onclick="ttt()">查看訂單</a></td></tr>`)
+            }
+        }
+
+        //alert(value)
     }
 
     document.getElementById('buy').addEventListener('click',function(){
@@ -149,7 +179,7 @@
         req.onreadystatechange = function(){
             if(req.status == 200 && req.readyState == 4){
 
-                var res = JSON.parse(req.response);
+                res = JSON.parse(req.response);
 
                 if(res.Msg != undefined){
                     alert(res.Msg);
@@ -178,5 +208,9 @@
             }
         }
     })
+
+    
+
+
 </script>
 } 
