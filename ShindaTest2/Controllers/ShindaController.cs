@@ -44,9 +44,10 @@ namespace ShindaTest2.Controllers
                               cName = o.CName,
                               showDt = o.CDt.Value.ToString("yyyy/MM/dd HH:mm:ss"),
                               showTot = o.CSubTotal.Value.ToString("C"),
+                              cDT = o.CDt,
                               items = o.COrderId,
                               showitems = ""
-                          }).ToList();
+                          }).OrderBy(x => x.cDT).ToList();
 
             foreach (var item in showls)
             {
@@ -179,10 +180,11 @@ namespace ShindaTest2.Controllers
                                   cID = o.COrderId,
                                   cName = o.CName,
                                   showDt = o.CDt.Value.ToString("yyyy/MM/dd HH:mm:ss"),
+                                  cDT = o.CDt,
                                   showTot = o.CSubTotal.Value.ToString("C"),
                                   items = o.COrderId,
                                   showitems = ""
-                              }).ToList();
+                              }).OrderBy(x => x.cDT).ToList();
 
                 foreach (var item in showls)
                 {
